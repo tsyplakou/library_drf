@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     'book',
     # third-party apps
     'rest_framework',
+    'rest_framework.authtoken',
 ]
 
 MIDDLEWARE = [
@@ -158,16 +159,19 @@ REST_FRAMEWORK = {
     'DATE_FORMAT': 'iso-8601',
     'DATETIME_FORMAT': 'iso-8601',
     'COERCE_DECIMAL_TO_STRING': True,
-    # 'DEFAULT_PERMISSION_CLASSES': (
-    #     'rest_framework.permissions.IsAuthenticated',
-    # ),
+    'DEFAULT_AUTHENTICATION_CLASS': (
+        'rest_framework.permissions.TokenAuthentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
     'DEFAULT_FILTER_BACKENDS': (
         'rest_framework.filters.OrderingFilter',
         'rest_framework.filters.SearchFilter',
     ),
-    'DEFAULT_PAGINATION_CLASS': (
-        'rest_framework.pagination.LimitOffsetPagination'
-    ),
+    # 'DEFAULT_PAGINATION_CLASS': (
+    #     'rest_framework.pagination.LimitOffsetPagination'
+    # ),
     # 'DEFAULT_PARSER_CLASSES': (
     #     'rest_framework.parsers.JSONParser',
     # ),

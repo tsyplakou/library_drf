@@ -1,6 +1,6 @@
 import factory.fuzzy
 
-from .models import User
+from .models import User, Reader, Librarian, Admin
 
 
 class UserFactory(factory.django.DjangoModelFactory):
@@ -15,8 +15,21 @@ class UserFactory(factory.django.DjangoModelFactory):
 
 
 class LibrarianFactory(UserFactory):
+    class Meta:
+        model = Librarian
+
     role = User.Role.LIBRARIAN
 
 
 class ReaderFactory(UserFactory):
+    class Meta:
+        model = Reader
+
     role = User.Role.READER
+
+
+class AdminFactory(UserFactory):
+    class Meta:
+        model = Admin
+
+    role = User.Role.ADMIN

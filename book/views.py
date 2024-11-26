@@ -7,9 +7,12 @@ from .serializers import (
     BookSerializer,
     BookWithAuthorSerializer,
 )
+from library.permissions import LibrarianOrReaderReadOnlyPermission
+from rest_framework.permissions import IsAuthenticated
 
 
 class AuthorViewSet(viewsets.ModelViewSet):
+    permission_classes = [IsAuthenticated, LibrarianOrReaderReadOnlyPermission]
     queryset = Author.objects.all()
     serializer_class = AuthorSerializer
     search_fields = ['first_name', 'last_name']
@@ -19,8 +22,6 @@ class BookViewSet(viewsets.ModelViewSet):
     queryset = Book.objects.all()
 
     def get_serializer_class(self):
-        self.request.user
-
         if self.request.query_params.get('with_author', False):
             return BookWithAuthorSerializer
         elif self.action == 'list':
@@ -43,8 +44,5 @@ class BookViewSet(viewsets.ModelViewSet):
         serializer = self.get_serializer(queryset, many=True)
 
         data = serializer.data
-
-        from django.db import connection
-        print(len(connection.queries))
 
         return Response(data)

@@ -31,3 +31,39 @@ class User(AbstractUser):
     @property
     def is_admin(self):
         return self.role == self.Role.ADMIN
+
+
+class ReaderManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().filter(role=User.Role.READER)
+
+
+class Reader(User):
+    class Meta:
+        proxy = True
+
+    objects = ReaderManager()
+
+
+class LibrarianManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().filter(role=User.Role.LIBRARIAN)
+
+
+class Librarian(User):
+    class Meta:
+        proxy = True
+
+    objects = LibrarianManager()
+
+
+class AdminManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().filter(role=User.Role.ADMIN)
+
+
+class Admin(User):
+    class Meta:
+        proxy = True
+
+    objects = AdminManager()
