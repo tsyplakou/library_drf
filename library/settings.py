@@ -55,7 +55,6 @@ INSTALLED_APPS = [
     'book',
     # third-party apps
     'rest_framework',
-    'rest_framework.authtoken',
 ]
 
 MIDDLEWARE = [
@@ -159,8 +158,8 @@ REST_FRAMEWORK = {
     'DATE_FORMAT': 'iso-8601',
     'DATETIME_FORMAT': 'iso-8601',
     'COERCE_DECIMAL_TO_STRING': True,
-    'DEFAULT_AUTHENTICATION_CLASS': (
-        'rest_framework.permissions.TokenAuthentication',
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticated',

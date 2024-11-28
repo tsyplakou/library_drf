@@ -1,5 +1,14 @@
 from rest_framework.test import APITestCase
-from rest_framework.authtoken.models import Token
+from rest_framework_simplejwt.tokens import RefreshToken
+
+
+def get_tokens_for_user(user):
+    refresh = RefreshToken.for_user(user)
+
+    return {
+        'refresh': str(refresh),
+        'access': str(refresh.access_token),
+    }
 
 
 class TestCase(APITestCase):
@@ -7,11 +16,11 @@ class TestCase(APITestCase):
 
     def set_user(self, user):
         if user is None:
-            self.client.logout()
             self.user = None
+            self.client.credentials(HTTP_AUTHORIZATION='')
             return
 
         self.user = user
-        token = Token.objects.create(user=user)
-        self.client.force_login(user)
-        self.client.credentials(HTTP_AUTHORIZATION=f'Token {token.key}')
+        self.client.credentials(
+            HTTP_AUTHORIZATION=f'Bearer {get_tokens_for_user(self.user)["access"]}',
+        )

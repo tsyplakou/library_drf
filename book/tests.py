@@ -24,7 +24,7 @@ class AuthorViewSetTestCase(TestCase):
 
         self.set_user(None)
         resp = self.client.get('/authors/')
-        self.assertEqual(resp.status_code, 403)
+        self.assertEqual(resp.status_code, 401)
 
     def test_only_librarian_and_admin_can_create_author(self):
         for user, expected_status_code in [
