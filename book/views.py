@@ -1,6 +1,7 @@
 from rest_framework import viewsets
 from rest_framework.response import Response
 
+from .filters import BookFilter
 from .models import Author, Book
 from .serializers import (
     AuthorSerializer,
@@ -20,6 +21,7 @@ class AuthorViewSet(viewsets.ModelViewSet):
 
 class BookViewSet(viewsets.ModelViewSet):
     queryset = Book.objects.all()
+    filterset_class = BookFilter
 
     def get_serializer_class(self):
         if self.request.query_params.get('with_author', False):
