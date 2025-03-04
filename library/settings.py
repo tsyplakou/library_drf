@@ -203,8 +203,6 @@ REST_FRAMEWORK = {
 
 CACHES = {
     "default": {
-        "BACKEND": "django.core.cache.backends.redis.RedisCache",
-        "KEY_PREFIX": "your_app_name:",
-        "LOCATION": f"redis://127.0.0.1:6379",
-    },
+        "BACKEND": "django.core.cache.backends.dummy.DummyCache",
+    }
 }
