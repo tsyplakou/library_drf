@@ -26,13 +26,6 @@ jobs:
       - name: Run Flake8 Linter
         run: flake8 . --count --max-line-length=80 --statistics
   test:
-    env:
-      SECRET_KEY: "super-duper-secret"
-      DEBUG: "+"
-      ALLOWED_HOSTS_1: "*"
-      DB_NAME: "library_28"
-      DB_USER: "postgres"
-      DB_PASSWORD: "postgres"
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
@@ -45,5 +38,12 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
     - name: Run Tests
+      env:
+        SECRET_KEY: "super-duper-secret"
+        DEBUG: "+"
+        ALLOWED_HOSTS_1: "*"
+        DB_NAME: "library_28"
+        DB_USER: "postgres"
+        DB_PASSWORD: "postgres"
       run: |
         python manage.py test
