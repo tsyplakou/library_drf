@@ -26,6 +26,13 @@ jobs:
       - name: Run Flake8 Linter
         run: flake8 . --count --max-line-length=80 --statistics
   test:
+    env:
+      SECRET_KEY: "super-duper-secret"
+      DEBUG: "+"
+      ALLOWED_HOSTS_1: "*"
+      DB_NAME: "library_28"
+      DB_USER: "postgres"
+      DB_PASSWORD: "postgres"
     runs-on: ubuntu-latest
     strategy:
       max-parallel: 2
